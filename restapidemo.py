@@ -1,29 +1,15 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Feb 10 12:44:30 2021
-
-@author: RajagiriSaiPooja
-"""
-
-# -- coding: utf-8 --
-"""
-Created on Wed Jan 27 10:51:37 2021
-
-@author: VASAVISAINUNNA
-"""
-
 import json
 from flask import Flask,jsonify,request,Response,make_response
 from flask_sqlalchemy import SQLAlchemy
 from marshmallow_sqlalchemy import ModelSchema
 from marshmallow import fields
 
-app = Flask(_name_)
+app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://admin:admin@localhost:3306/devops'
 db = SQLAlchemy(app)
 class Product(db.Model):
-    _tablename_="pyproducts"
-    producctId=db.Column(db.Integer,primary_key=True)
+    __tablename__="pyproducts"
+    productId=db.Column(db.Integer,primary_key=True)
     productName =db.Column(db.String(40))
     
     description =db.Column(db.String(40))
@@ -37,14 +23,14 @@ class Product(db.Model):
         db.session.add(self)
         db.session.commit()
         return self
-    def _init_(self,productName,description,productCode,price,starRating,imageUrl):
+    def __init__(self,productName,description,productCode,price,starRating,imageUrl):
         self.productName=productName
         self.description=description
         self.productCode=productCode
         self.price=price
         self.starRating=starRating
         self.imageUrl=imageUrl
-    def _repr_(self):
+    def __repr__(self):
         return"% self.productId"
 db.create_all()
 class ProductSchema(ModelSchema):
@@ -107,4 +93,5 @@ def getProductByName(productName):
     productSchema=ProductSchema(many=True)
     products=productSchema.dump(get_products)
     return make_response(jsonify({"products":products}),200)
-app.run(port=4002)
+app.run(port=4002)    
+    
