@@ -74,7 +74,7 @@ def deleteProductById(productId):
     db.session.commit()
     return make_response(jsonify({"result":"product deleted"}),204)
 
-@app.route('/products/<int:productId>',methods=['PUT'])
+@app.route('/IBM/<int:productId>',methods=['PUT'])
 def updateProduct(productId):
     data = request.get_json()
     get_products=Product.query.get(productId)
